@@ -1,14 +1,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true" >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:focusableInTouchMode="true"
-        android:fitsSystemWindows="true" >
+        android:focusableInTouchMode="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:id="@+id/tvLoginWarning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="⚠ Обратите внимание на правила написания логина:\n• минимум 4 символа\n• только английские буквы\n• допускаются точка (.) и нижнее подчеркивание (_)\n• цифры, спецсимволы и символы других алфавитов — запрещены\n• должен быть уникальным"
+                android:text="⚠ Обратите внимание на правила написания логина:\n• минимум 4 символа\n• разрешены английские буквы и цифры\n• допускаются точка (.) и нижнее подчеркивание (_)\n• спецсимволы и символы других алфавитов — запрещены\n• логин должен быть уникальным"
                 android:textSize="13sp"
                 android:textColor="@color/welcomecolor"
                 android:paddingBottom="16dp" />

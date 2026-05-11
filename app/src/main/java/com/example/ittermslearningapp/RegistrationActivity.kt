@@ -57,7 +57,7 @@ class RegistrationActivity : AppCompatActivity() {
         val tvError = findViewById<TextView>(R.id.tvRegError)
 
         val usernameFilter = InputFilter { source, _, _, _, _, _ ->
-            val regex = Regex("[a-zA-Z._]+")
+            val regex = Regex("[a-zA-Z0-9._]+")
             if (source.matches(regex)) source else ""
         }
 

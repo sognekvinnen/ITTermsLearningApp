@@ -2,6 +2,7 @@ package com.example.ittermslearningapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -48,6 +49,13 @@ class AuthorisationActivity : AppCompatActivity() {
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnConfirm = findViewById<Button>(R.id.btnConfirm)
+
+        val usernameFilter = InputFilter { source, _, _, _, _, _ ->
+            val regex = Regex("[a-zA-Z0-9._]+")
+            if (source.isEmpty() || source.matches(regex)) source else ""
+        }
+
+        etUsername.filters = arrayOf(usernameFilter, InputFilter.LengthFilter(20))
 
         btnConfirm.setOnClickListener {
             val username = etUsername.text.toString().trim()
