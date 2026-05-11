@@ -226,7 +226,7 @@ class MainMenuActivity : AppCompatActivity() {
                     ).apply {
                         marginStart = (28 * dp).toInt()
                     }
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.dialog_divider_thin))
+                    setBackgroundColor("#E0E0E0".toColorInt())
                 })
             }
         }

@@ -18,7 +18,8 @@
         <activity
             android:name=".RegistrationActivity"
             android:exported="false"
-            android:theme="@style/Theme.ITTermsLearningApp" />
+            android:theme="@style/Theme.ITTermsLearningApp"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
