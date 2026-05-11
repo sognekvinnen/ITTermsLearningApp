@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    style="@style/BaseScreen"
+    android:orientation="vertical">
+
+    <!-- APP BAR -->
+    <LinearLayout
+        android:id="@+id/appBarTest"
+        style="@style/AppBar"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btnBackTest"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tvDomainTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppBarText"
+            android:layout_marginStart="16dp"
+            android:text="IT" />
+
+        <TextView
+            android:id="@+id/tvQuestionCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppBarText"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="1/12" />
+
+    </LinearLayout>
+
+    <!-- КОНТЕНТ -->
+    <ScrollView
+        android:id="@+id/scrollViewTest"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:id="@+id/contentContainerTest"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- КАРТОЧКА С ТЕРМИНОМ -->
+            <LinearLayout
+                android:id="@+id/cardTermContainer"
+                style="@style/CardContainer"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTermTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Термин — это..."
+                    style="@style/CardTermText"
+                    android:clickable="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+            <!-- ВАРИАНТЫ ОТВЕТОВ -->
+            <LinearLayout
+                android:id="@+id/answersContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tvTermDefTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CardDefinitionText" />
+            </LinearLayout>
+
+            <!-- КНОПКА ОТВЕТИТЬ -->
+            <Button
+                android:id="@+id/btnSubmitAnswer"
+                style="@style/AppButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ответить"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp" />
+
+            <!-- НАВИГАЦИЯ ПО ВОПРОСАМ -->
+            <LinearLayout
+                android:id="@+id/navigationContainerTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnPrevious"
+                    style="@style/NavigationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Предыдущий\nвопрос"
+                    android:visibility="gone"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/NavigationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Следующий\nвопрос"
+                    android:visibility="gone"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnFinishTest"
+        style="@style/AppButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Завершить тест и посмотреть результаты"
+        android:layout_margin="16dp"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Базовый экран -->
+    <style name="BaseScreen">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <!-- AppBar -->
+    <style name="AppBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@color/primary</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <style name="AppBarText">
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Общие кнопки -->
+    <style name="AppButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/bg_button_rounded</item>
+    </style>
+
+    <!-- Карточка термина -->
+    <style name="CardContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="CardLevelText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/on_surface_variant</item>
+    </style>
+
+    <style name="CardTermText">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:fontFamily">@font/cormorantinfantregular</item>
+    </style>
+
+    <style name="CardDefinitionText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/on_surface_variant</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:fontFamily">@font/cormorantinfantregular</item>
+    </style>
+
+    <!-- Кнопки навигации вперед-назад -->
+    <style name="NavButton" parent="AppButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <!-- Кнопки навигации "К следующему/предыдущему вопросу" -->
+    <style name="NavigationButton" parent="AppButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <!-- Большой коричневый заголовок -->
+    <style name="AuthTitle">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Заголовок Логин Пароль -->
+    <style name="AuthHeading">
+        <item name="android:textColor">@color/on_surface</item>
+    </style>
+
+    <!-- Поля ввода -->
+    <style name="AuthInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textColorHint">@color/on_surface_variant</item>
+        <item name="hintTextColor">@color/on_surface_variant</item>
+        <item name="boxStrokeColor">@color/outline</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+</resources>

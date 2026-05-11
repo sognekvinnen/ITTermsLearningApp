@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- После отправки: выбрана + правильный -->
+    <item android:state_enabled="false" android:state_selected="true" android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_correct_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_correct_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+
+    <!-- После отправки: выбрана + неправильный -->
+    <item android:state_enabled="false" android:state_selected="true" android:state_activated="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_wrong_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_wrong_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+
+    <!-- После отправки: правильный, но не выбран -->
+    <item android:state_enabled="false" android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_correct_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_correct_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+
+    <!-- После отправки: не выбран, не подсвечен -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_disabled_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_disabled_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+
+    <!-- Выбранная карточка (до отправки) -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_selected_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_selected_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+
+    <!-- Не выбранная карточка -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_default_bg" />
+            <corners android:radius="16dp" />
+            <stroke android:width="1dp" android:color="@color/card_default_border" />
+            <padding android:left="16dp" android:top="16dp" android:right="16dp" android:bottom="16dp" />
+        </shape>
+    </item>
+</selector>

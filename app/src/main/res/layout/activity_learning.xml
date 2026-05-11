@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout style="@style/BaseScreen">
+
+        <!-- APP BAR -->
+        <LinearLayout
+            android:id="@+id/appBar"
+            style="@style/AppBar">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvDomain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/AppBarText"
+                android:layout_marginStart="16dp"
+                android:text="IT" />
+        </LinearLayout>
+
+        <!-- КОНТЕНТ -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- КАРТОЧКА -->
+                <LinearLayout
+                    android:id="@+id/cardContainer"
+                    style="@style/CardContainer">
+
+                    <TextView
+                        android:id="@+id/tvLevel"
+                        style="@style/CardLevelText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Простой уровень" />
+
+                    <TextView
+                        android:id="@+id/tvTerm"
+                        style="@style/CardTermText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Термин"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvDefinition"
+                        style="@style/CardDefinitionText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Определение термина" />
+
+                    <Button
+                        android:id="@+id/btnToggleDefinition"
+                        style="@style/AppButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Спрятать определение"
+                        android:layout_marginTop="16dp" />
+                </LinearLayout>
+
+                <!-- НАВИГАЦИЯ ПО ТЕРМИНАМ -->
+                <LinearLayout
+                    android:id="@+id/navigationContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <Button
+                        android:id="@+id/btnPrevious"
+                        style="@style/NavButton"
+                        android:text="Предыдущий\nтермин️"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btnNext"
+                        style="@style/NavButton"
+                        android:text="Следующий\nтермин️"
+                        android:visibility="gone"
+                        android:layout_marginBottom="16dp" />
+                </LinearLayout>
+
+                <!-- КОНТЕЙНЕР ДЛЯ КАТЕГОРИЙ СВЯЗАННЫХ СЛОВ -->
+                <LinearLayout
+                    android:id="@+id/relatedContainer"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

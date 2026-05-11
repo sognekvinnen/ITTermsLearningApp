@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">IT Atlas</string>
+    <string-array name="subject_domains">
+        <item>IT</item>
+    </string-array>
+    <string name="login_welcome_text">
+        Добро пожаловать в <b><font color="#B00020">TermsLearningApp</font></b> — приложение для изучения профессиональных терминов по онтологической модели.\n\nВойдите, пожалуйста, в аккаунт\nили создайте новый:
+    </string>
+    <string name="main_menu_welcome_text">
+        Добро пожаловать в TermsLearningApp — приложение для изучения профессиональных терминов по онтологической модели предметной области.\n\n
+    </string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+</resources>
