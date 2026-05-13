@@ -37,7 +37,7 @@ class DatabaseHelper(private val context: Context) :
         }
     }
 
-    // Открываем БД
+    // Открытие БД
     private fun openDatabase() {
         val dbFile = context.getDatabasePath(DB_NAME)
         mDatabase = SQLiteDatabase.openDatabase(
@@ -53,7 +53,7 @@ class DatabaseHelper(private val context: Context) :
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
     }
 
-    // DATA CLASSES
+    // БД Таблицы
     data class Topic(
         val id: Int,
         val name: String
@@ -306,8 +306,6 @@ class DatabaseHelper(private val context: Context) :
 
     fun insertUserProgress(userId: Int, conceptId: Int, status: String, number: Int) {
         val db = mDatabase!!
-        // UNIQUE (user_id, concept_id) в новой схеме — используем INSERT OR IGNORE
-        // чтобы не падать при гонке двойного вызова
         db.execSQL(
             """
             INSERT OR IGNORE INTO UserProgress (user_id, concept_id, status, number)

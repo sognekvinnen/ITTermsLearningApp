@@ -63,7 +63,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         etUsername.filters = arrayOf(
             usernameFilter,
-            InputFilter.LengthFilter(20) // максимум по желанию
+            InputFilter.LengthFilter(20)
         )
 
         val passwordFilter = InputFilter { source, _, _, _, _, _ ->
@@ -105,7 +105,7 @@ class RegistrationActivity : AppCompatActivity() {
             }
 
             try {
-                // Записываем пользователя в БД
+                // запись нового пользователя в БД
                 val db = dbHelper.writableDatabase
                 val values = ContentValues().apply {
                     put("username", username)
@@ -114,19 +114,19 @@ class RegistrationActivity : AppCompatActivity() {
                 db.insertOrThrow("User", null, values)
                 db.close()
 
-                // Проверяем, что пользователь добавлен
+                // Проверка на добавление
                 val newUser = dbHelper.getUserByUsername(username)
                 if (newUser != null) {
                     Toast.makeText(this, "Регистрация успешна!", Toast.LENGTH_SHORT).show()
 
-                    // Сохраняем данные в SharedPreferences
+                    // SharedPreferences
                     val prefs = getSharedPreferences("user_session", MODE_PRIVATE)
                     prefs.edit()
                         .putInt("user_id", newUser.id)
                         .putString("username", newUser.username)
                         .apply()
 
-                    // Переходим в MainMenuActivity
+                    // Переход в MainMenuActivity
                     startActivity(Intent(this, MainMenuActivity::class.java))
                     finish()
                 } else {

@@ -31,10 +31,10 @@ class LearningActivity : AppCompatActivity() {
     private var currentLevel: Int = 1
     private var userId: Int = -1
 
-    // Карта id темы → название темы, загружается один раз при старте
+    // Карта id темы -> название темы, загружается один раз при старте
     private var topicNamesMap: Map<Int, String> = emptyMap()
 
-    // НАВИГАЦИЯ (браузерная модель)
+    // НАВИГАЦИЯ
     private val backStack = mutableListOf<Concept>()
     private val forwardStack = mutableListOf<Concept>()
 
@@ -58,7 +58,6 @@ class LearningActivity : AppCompatActivity() {
         currentTopicId = intent.getIntExtra("topic_id", 1)
         currentLevel   = intent.getIntExtra("level", 1)
 
-        // Загружаем карту тем один раз — используем при отображении связанных карточек
         topicNamesMap = dbHelper.getTopics().associate { it.id to it.name }
 
         initUserSession()
@@ -73,8 +72,6 @@ class LearningActivity : AppCompatActivity() {
         loadInitialTerm()
     }
 
-    // ==================== SESSION ====================
-
     private fun initUserSession() {
         val prefs = getSharedPreferences("user_session", MODE_PRIVATE)
         userId = prefs.getInt("user_id", -1)
@@ -84,8 +81,6 @@ class LearningActivity : AppCompatActivity() {
         }
     }
 
-    // ==================== INITIAL LOAD ====================
-
     private fun loadInitialTerm() {
         val concept = dbHelper.getRandomConcept(currentLevel, currentTopicId)
         if (concept != null) {
@@ -94,8 +89,6 @@ class LearningActivity : AppCompatActivity() {
             Toast.makeText(this, "Термины не найдены", Toast.LENGTH_SHORT).show()
         }
     }
-
-    // ==================== DISPLAY ====================
 
     private fun displayConcept(concept: Concept, saveHistory: Boolean = true) {
         if (saveHistory && currentConcept != null) {
@@ -118,8 +111,6 @@ class LearningActivity : AppCompatActivity() {
         updateNavigationButtons()
         displayRelatedCategories(concept)
     }
-
-    // ==================== RELATED CONCEPTS ====================
 
     private fun displayRelatedCategories(concept: Concept) {
         val container = binding.relatedContainer
@@ -188,12 +179,6 @@ class LearningActivity : AppCompatActivity() {
         return sameTopicSorted + otherTopicSorted
     }
 
-    /**
-     * Строит порядок уровней для отображения.
-     * Пример для уровня 2: [2, 1, 3]
-     * Пример для уровня 1: [1, 2, 3]
-     * Пример для уровня 3: [3, 2, 1]
-     */
     private fun buildLevelOrder(selected: Int): List<Int> {
         val result = mutableListOf(selected)
         for (lvl in selected - 1 downTo 1) result.add(lvl)
@@ -201,16 +186,12 @@ class LearningActivity : AppCompatActivity() {
         return result
     }
 
-    // ==================== HELPERS ====================
-
     private fun difficultyLabel(difficulty: Int) = when (difficulty) {
         1    -> "Простой уровень"
         2    -> "Средний уровень"
         3    -> "Сложный уровень"
         else -> "Уровень $difficulty"
     }
-
-    // ==================== NAVIGATION ====================
 
     private fun goBack() {
         if (backStack.isEmpty()) return
@@ -230,8 +211,6 @@ class LearningActivity : AppCompatActivity() {
         binding.btnPrevious.visibility = if (backStack.isNotEmpty()) View.VISIBLE else View.GONE
         binding.btnNext.visibility     = if (forwardStack.isNotEmpty()) View.VISIBLE else View.GONE
     }
-
-    // ==================== UI HELPERS ====================
 
     private fun toggleDefinition() {
         currentConcept ?: return
@@ -319,8 +298,6 @@ class LearningActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    // ==================== PROGRESS ====================
 
     private fun registerConceptView(conceptId: Int) {
         viewedConcepts[conceptId] = (viewedConcepts[conceptId] ?: 0) + 1

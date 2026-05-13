@@ -50,7 +50,7 @@ class TestActivity : AppCompatActivity() {
 
     private var currentQuestionIndex = 0
     private val questionList = mutableListOf<Question>()
-    private val userAnswers = mutableMapOf<Int, Int>() // индекс вопроса → выбранный вариант
+    private val userAnswers = mutableMapOf<Int, Int>() // индекс вопроса -> выбранный вариант
 
     private var currentTopicId: Int = 1
     private var currentLevel: Int = 1
@@ -80,11 +80,11 @@ class TestActivity : AppCompatActivity() {
         tvTerm            = findViewById(R.id.tvTermTest)
         navigationContainer = findViewById(R.id.navigationContainerTest)
 
-        // topic_id и level приходят из Intent от MainMenuActivity
+        // topic_id и level приходят из MainMenuActivity
         currentTopicId = intent.getIntExtra("topic_id", 1)
         currentLevel   = intent.getIntExtra("level", 1)
 
-        // Загружаем название темы из БД и показываем в шапке
+        // Загружаем название темы из БД
         val topicName = dbHelper.getTopics()
             .find { it.id == currentTopicId }?.name ?: "Тема $currentTopicId"
         tvDomain.text = topicName
@@ -126,8 +126,7 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    // ===================== ЗАГРУЗКА ВОПРОСОВ =====================
-
+    // Загрузка вопросов
     private fun loadQuestions() {
         // getConceptsForTest возвращает ровно limit (10) случайных терминов
         val concepts = dbHelper.getConceptsForTest(
@@ -138,7 +137,7 @@ class TestActivity : AppCompatActivity() {
 
         if (concepts.isEmpty()) return
 
-        // Все концепты темы и уровня — для генерации неправильных вариантов
+        // Все концепты для тех же темы и уровня — для генерации неправильных вариантов
         val allConcepts = dbHelper.getConceptsByLevelAndTopic(currentLevel, currentTopicId)
 
         totalQuestions = concepts.size
@@ -164,8 +163,7 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    // ===================== ОТОБРАЖЕНИЕ ВОПРОСА =====================
-
+    // Отображение вопроса
     private fun displayQuestion(index: Int) {
         val question = questionList[index]
         tvTerm.text = question.term
@@ -230,8 +228,7 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    // ===================== ВЫБОР ОТВЕТА =====================
-
+    // Выбор ответа
     private fun selectCard(card: LinearLayout, radio: RadioButton) {
         if (!btnSubmitAnswer.isEnabled) return
         for (j in 0 until answersContainer.childCount) {
@@ -263,12 +260,11 @@ class TestActivity : AppCompatActivity() {
             card.isSelected  = (i == selectedIndex)
             radio.isEnabled  = false
             card.isClickable = false
-            card.isEnabled   = false   // включаем state_enabled="false" в селекторе
+            card.isEnabled   = false
 
             val isCorrect = question.answers[i] == question.correctAnswer
             card.isActivated = isCorrect   // true -> зелёный, false -> красный
 
-            // Радиокнопки красим как раньше
             radio.buttonTintList = ColorStateList(
                 arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf(-android.R.attr.state_checked)),
                 intArrayOf(
@@ -299,8 +295,7 @@ class TestActivity : AppCompatActivity() {
         dbHelper.upsertProgressAfterTest(userId, questionList[questionIndex].conceptId, status)
     }
 
-    // ===================== ДИАЛОГИ =====================
-
+    // Диалог выхода
     private fun showExitConfirmation(
         modeName: String,
         emoji: String,
@@ -385,16 +380,15 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
+    // Окно подтверждения завершения теста
     private fun showFinishConfirmationDialog(skippedCount: Int) {
         val dp = resources.displayMetrics.density
 
-        // Корневой контейнер с padding'ами, как в showResults
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding((24 * dp).toInt(), (20 * dp).toInt(), (24 * dp).toInt(), (12 * dp).toInt())
         }
 
-        // Иконка / эмодзи предупреждения
         root.addView(TextView(this).apply {
             text = "⚠️"
             textSize = 36f
@@ -405,7 +399,6 @@ class TestActivity : AppCompatActivity() {
             ).apply { bottomMargin = (8 * dp).toInt() }
         })
 
-        // Заголовок
         root.addView(TextView(this).apply {
             text = "Тест не завершён"
             textSize = 20f
@@ -418,7 +411,6 @@ class TestActivity : AppCompatActivity() {
             ).apply { bottomMargin = (12 * dp).toInt() }
         })
 
-        // Основное сообщение — собираем Spannable, чтобы выделить число
         val message = SpannableStringBuilder()
             .append("Вы не ответили на ")
             .append(boldColored("$skippedCount", Color.parseColor("#D32F2F"), 18f, this))
@@ -436,7 +428,6 @@ class TestActivity : AppCompatActivity() {
             ).apply { bottomMargin = (8 * dp).toInt() }
         })
 
-        // Тонкий разделитель
         root.addView(View(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -448,7 +439,6 @@ class TestActivity : AppCompatActivity() {
             setBackgroundColor(ContextCompat.getColor(context, R.color.dialog_divider))
         })
 
-        // Диалог
         AlertDialog.Builder(this)
             .setView(root)
             .setPositiveButton("Завершить") { _, _ -> showResults() }
@@ -457,7 +447,6 @@ class TestActivity : AppCompatActivity() {
             .show()
     }
 
-    // Вспомогательная функция для жирного цветного куска текста
     private fun boldColored(text: String, color: Int, sizeSp: Float, context: Context): SpannableString {
         return SpannableString(text).apply {
             setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -466,7 +455,6 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    // Конвертация sp → пиксели (можно вынести в extension)
     private fun Float.toSp(context: Context) = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP, this, context.resources.displayMetrics
     )
@@ -480,7 +468,7 @@ class TestActivity : AppCompatActivity() {
         else                  -> "вопросов"
     }
 
-    // ===================== ЭКРАН РЕЗУЛЬТАТОВ =====================
+    // Окно результатов
 
     private fun showResults() {
         val correctCount = userAnswers.count { (index, answer) ->
@@ -507,7 +495,6 @@ class TestActivity : AppCompatActivity() {
             else           -> "Продолжай учиться"
         }
 
-        // ---- Строим кастомный layout ----
         val dp = resources.displayMetrics.density
 
         val scroll = ScrollView(this).apply {
@@ -523,7 +510,6 @@ class TestActivity : AppCompatActivity() {
         }
         scroll.addView(root)
 
-        // Emoji + процент
         root.addView(TextView(this).apply {
             text = "$emoji  $percent%"
             textSize = 40f
@@ -600,7 +586,7 @@ class TestActivity : AppCompatActivity() {
             .show()
     }
 
-    // ---- Вспомогательные методы для построения результатов ----
+    // Вспомогательные методы для построения результатов
 
     private fun scoreColor(percent: Int): Int = when {
         percent >= 70 -> Color.parseColor("#2E7D32")
@@ -644,7 +630,7 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    // ===================== DATA CLASS =====================
+    // Класс "Вопрос"
 
     data class Question(
         val conceptId: Int,

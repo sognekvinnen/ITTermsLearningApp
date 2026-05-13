@@ -27,7 +27,6 @@ class MainMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainMenuBinding
     private lateinit var db: DatabaseHelper
 
-    // Названия и id тем фиксированы и соответствуют таблице Topic в БД
     private val topics = listOf(
         1 to "Аппаратное обеспечение",
         2 to "Программное обеспечение",
@@ -59,11 +58,10 @@ class MainMenuActivity : AppCompatActivity() {
             insets
         }
 
-        // Читаем имя пользователя из сессии
+        // Читаем имя пользователя из сессии SharedPreferences
         val prefs = getSharedPreferences("user_session", MODE_PRIVATE)
         val username = prefs.getString("username", "Пользователь") ?: "Пользователь"
 
-        // Формируем приветственный текст с выделением названия приложения и имени
         val appName = "IT Atlas"
         val fullText = "Добро пожаловать в $appName, $username!"
         val spannable = SpannableString(fullText)
@@ -78,7 +76,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         binding.tvMainMenuWelcome.text = spannable
 
-        // Кнопка "Обучение" — выбор темы → выбор уровня → переход в LearningActivity
+        // Кнопка "Обучение" — выбор темы -> выбор уровня -> переход в LearningActivity
         binding.btnLearning.setOnClickListener {
             showTopicDialog { topicId ->
                 showLevelDialog { level ->
@@ -90,7 +88,7 @@ class MainMenuActivity : AppCompatActivity() {
             }
         }
 
-        // Кнопка "Тест" — выбор темы → выбор уровня → переход в TestActivity
+        // Кнопка "Тест" — выбор темы -> выбор уровня -> переход в TestActivity
         binding.btnTest.setOnClickListener {
             showTopicDialog { topicId ->
                 showLevelDialog { level ->
@@ -118,7 +116,7 @@ class MainMenuActivity : AppCompatActivity() {
         }
     }
 
-    // Диалог выбора темы. Результат возвращается через callback.
+    // Диалог выбора темы
     private fun showTopicDialog(onSelected: (topicId: Int) -> Unit) {
         val dp = resources.displayMetrics.density
 
@@ -185,7 +183,7 @@ class MainMenuActivity : AppCompatActivity() {
                 }
             }
 
-            // Номер / буллет
+            // Номер темы
             row.addView(TextView(this).apply {
                 text = "${index + 1}."
                 textSize = 14f
@@ -238,12 +236,10 @@ class MainMenuActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    // Диалог выбора уровня. Результат возвращается через callback.
-    // Используется только для тестового режима.
+    // Диалог выбора уровня
     private fun showLevelDialog(onSelected: (level: Int) -> Unit) {
         val dp = resources.displayMetrics.density
 
-        // Оставляем только цвета и названия (эмодзи больше не нужны)
         val levelAccents = listOf(
             "#4CAF50" to "Простой",
             "#FF9800" to "Средний",
@@ -263,7 +259,6 @@ class MainMenuActivity : AppCompatActivity() {
         }
         scroll.addView(root)
 
-        // Верхняя иконка мишени (она обычно отображается нормально, так как старая)
         root.addView(TextView(this).apply {
             text = "🎯"
             textSize = 36f
@@ -311,7 +306,6 @@ class MainMenuActivity : AppCompatActivity() {
                 }
             }
 
-            // --- ЗАМЕНА ЭМОДЗИ НА ВЕКТОРНЫЙ КРУЖОК ---
             row.addView(View(this).apply {
                 // Устанавливаем размер круга (20dp)
                 val size = (20 * dp).toInt()
@@ -349,7 +343,7 @@ class MainMenuActivity : AppCompatActivity() {
             }
             root.addView(row)
 
-            // Тонкий разделитель между строками
+            // разделитель между строками
             if (index < levels.lastIndex) {
                 root.addView(View(this).apply {
                     layoutParams = LinearLayout.LayoutParams(
@@ -367,8 +361,7 @@ class MainMenuActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
-    // Диалог подтверждения выхода
+    // Выход
     private fun showLogoutDialog() {
         AlertDialog.Builder(this)
             .setTitle("Выход из аккаунта")
@@ -378,7 +371,6 @@ class MainMenuActivity : AppCompatActivity() {
             .show()
     }
 
-    // Очищаем сессию и переходим на экран входа
     private fun logout() {
         getSharedPreferences("user_session", MODE_PRIVATE).edit().clear().apply()
         val intent = Intent(this, LoginActivity::class.java)

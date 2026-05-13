@@ -9,14 +9,11 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.ittermslearningapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-
-    // Создаём binding переменную
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Инициализация binding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -33,13 +30,11 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        // Кнопка "Авторизация"
         binding.btnAuthorisation.setOnClickListener {
             val intent = Intent(this, AuthorisationActivity::class.java) // заглушка
             startActivity(intent)
         }
 
-        // Кнопка "Регистрация"
         binding.btnRegistration.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java) // заглушка
             startActivity(intent)

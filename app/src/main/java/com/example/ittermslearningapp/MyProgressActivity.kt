@@ -15,8 +15,6 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import android.widget.ArrayAdapter
 
 class MyProgressActivity : AppCompatActivity() {
-
-    // ─── Перечисление столбцов сортировки ───────────────────────────────────
     enum class SortColumn { NONE, TERM, DIFFICULTY, STATUS, REPETITIONS, TOPIC }
 
     data class SortState(
@@ -24,14 +22,14 @@ class MyProgressActivity : AppCompatActivity() {
         val ascending: Boolean = true
     )
 
-    // ─── Порядок статусов
+    // Порядок статусов
     private val STATUS_SORT_ORDER = mapOf(
         "Изучаю"    to 0,
         "Повторяю"  to 1,
         "Знаю" to 2
     )
 
-    // Базовые подписи заголовков (без стрелок)
+    // Подписи заголовков таблицы
     private val HEADER_LABELS = mapOf(
         SortColumn.TERM        to "Термин",
         SortColumn.DIFFICULTY  to "Сложность",
@@ -40,7 +38,6 @@ class MyProgressActivity : AppCompatActivity() {
         SortColumn.TOPIC       to "Тема"
     )
 
-    // ─── Состояние ──────────────────────────────────────────────────────────
     private lateinit var binding: ActivityMyProgressBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var dbHelper: DatabaseHelper
@@ -54,7 +51,7 @@ class MyProgressActivity : AppCompatActivity() {
 
     private var sortState = SortState()
 
-    // ─── onCreate ────────────────────────────────────────────────────────────
+    // onCreate 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyProgressBinding.inflate(layoutInflater)
@@ -82,7 +79,7 @@ class MyProgressActivity : AppCompatActivity() {
         loadProgress()
     }
 
-    // ─── Спиннер: Тема ───────────────────────────────────────────────────────
+    // Спиннер: Тема 
     private fun setupTopicSpinner() {
         allTopics = dbHelper.getTopics()
 
@@ -100,8 +97,7 @@ class MyProgressActivity : AppCompatActivity() {
         }
     }
 
-    // ─── Спиннер: Уровень сложности ──────────────────────────────────────────
-    // Порядок списка: [0]=все, [1]=Простой→difficulty=1, [2]=Средний→2, [3]=Сложный→3
+    // Спиннер: Уровень сложности
     private fun setupLevelSpinner() {
         val levels = listOf("Все уровни", "Простой", "Средний", "Сложный")
 
@@ -111,13 +107,12 @@ class MyProgressActivity : AppCompatActivity() {
         autoComplete?.setText(levels[0], false)
 
         autoComplete?.setOnItemClickListener { _, _, position, _ ->
-            // position 0 → null (все), position 1 → difficulty 1 (Простой), и т.д.
             selectedLevel = if (position == 0) null else position
             loadProgress()
         }
     }
 
-    // ─── Спиннер: Статус ─────────────────────────────────────────────────────
+    // Спиннер: Статус 
     private fun setupStatusSpinner() {
         val statuses = listOf("Все статусы", "Изучаю", "Знаю", "Повторяю")
 
@@ -132,7 +127,7 @@ class MyProgressActivity : AppCompatActivity() {
         }
     }
 
-    // ─── Клики по заголовкам: переключение сортировки ────────────────────────
+    // Клики по заголовкам: сортировка по столбцу
     private fun setupHeaderClicks() {
         fun toggle(column: SortColumn) {
             sortState = if (sortState.column == column) {
@@ -151,7 +146,7 @@ class MyProgressActivity : AppCompatActivity() {
         binding.headerTopic.setOnClickListener       { toggle(SortColumn.TOPIC) }
     }
 
-    // ─── Обновление стрелок в заголовках ─────────────────────────────────────
+    // Обновление стрелок при сортировке
     private fun updateHeaderIndicators() {
         val views = mapOf(
             SortColumn.TERM        to binding.headerTerm,
@@ -171,7 +166,7 @@ class MyProgressActivity : AppCompatActivity() {
         }
     }
 
-    // ─── Применение сортировки ───────────────────────────────────────────────
+    // Применение сортировки
     private fun applySort(list: List<ProgressItem>): List<ProgressItem> {
         val asc = sortState.ascending
         return when (sortState.column) {
@@ -192,29 +187,25 @@ class MyProgressActivity : AppCompatActivity() {
         }
     }
 
-    // ─── Загрузка и отображение данных ───────────────────────────────────────
+    // Загрузка и отображение данных 
     private fun loadProgress() {
-        // 1. Получаем базовый список по теме (или все)
         var list = if (selectedTopic == null) {
             dbHelper.getUserProgressWithConcept(userId)
         } else {
             dbHelper.getUserProgressWithConceptByTopic(userId, selectedTopic!!.id)
         }
 
-        // 2. Фильтр по уровню сложности (И-логика: все три фильтра независимы)
         selectedLevel?.let { level ->
             list = list.filter { it.difficulty == level }
         }
 
-        // 3. Фильтр по статусу
         selectedStatus?.let { status ->
             list = list.filter { it.status == status }
         }
 
-        // 4. Сортировка
         val sorted = applySort(list)
 
-        // 5. Отображение столбца «Тема» только если тема не выбрана
+        // Отображение столбца «Тема» только если тема не выбрана
         val showTopicColumn = (selectedTopic == null)
         binding.headerTopic.visibility = if (showTopicColumn) View.VISIBLE else View.GONE
 
@@ -223,7 +214,7 @@ class MyProgressActivity : AppCompatActivity() {
         recyclerView.adapter = ProgressAdapter(sorted, showTopicColumn)
     }
 
-    // ─── Модель данных ───────────────────────────────────────────────────────
+    // Модель данных 
     data class ProgressItem(
         val term: String,
         val difficulty: Int,
@@ -233,7 +224,7 @@ class MyProgressActivity : AppCompatActivity() {
         val number: Int
     )
 
-    // ─── Адаптер RecyclerView ────────────────────────────────────────────────
+    // Адаптер RecyclerView 
     class ProgressAdapter(
         private val data: List<ProgressItem>,
         private val showTopicColumn: Boolean
@@ -270,7 +261,6 @@ class MyProgressActivity : AppCompatActivity() {
 
             if (showTopicColumn) {
                 holder.tvTopic.visibility = View.VISIBLE
-                // Исправление: показываем topicName для КАЖДОЙ строки, не только первой в группе
                 holder.tvTopic.text = item.topicName
             } else {
                 holder.tvTopic.visibility = View.GONE

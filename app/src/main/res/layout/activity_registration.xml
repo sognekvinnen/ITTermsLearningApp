@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     style="@style/BaseScreen">
 
-    <!-- Закреплённый хедер вне ScrollView -->
     <LinearLayout
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
@@ -41,7 +40,6 @@
 
     </LinearLayout>
 
-    <!-- ScrollView прикреплён снизу хедера -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
