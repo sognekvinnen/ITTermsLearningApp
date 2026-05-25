@@ -19,7 +19,7 @@ import com.example.ittermslearningapp.databinding.ActivityLearningBinding
 
 class LearningActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLearningBinding
+    lateinit var binding: ActivityLearningBinding
     private lateinit var dbHelper: DatabaseHelper
 
     private val viewedConcepts = mutableMapOf<Int, Int>() // conceptId -> количество просмотров

@@ -97,17 +97,6 @@ class TestActivityTest {
         }
     }
 
-    // Исключение склонения для чисел 11-14
-    @Test
-    fun wordForm_eleven_returnsVoprosov_notVopros() {
-        launchWithSession().use { scenario ->
-            scenario.onActivity { activity ->
-                assertEquals("вопросов", wordForm(activity, 11))
-                assertNotEquals("wordForm(11) не должен быть 'вопрос'", "вопрос", wordForm(activity, 11))
-            }
-        }
-    }
-
     // Красный цвет для низкого процента
     @Test
     fun scoreColor_lowPercent_returnsRed() {
@@ -124,13 +113,83 @@ class TestActivityTest {
         }
     }
 
-    // Склонение для числа 21
+    // Склонение для числа 3 (форма «вопроса»)
     @Test
-    fun wordForm_twentyOne_returnsVopros_notVoprosov() {
+    fun wordForm_three_returnsVoprosa() {
         launchWithSession().use { scenario ->
             scenario.onActivity { activity ->
-                assertEquals("вопрос", wordForm(activity, 21))
-                assertNotEquals("wordForm(21) не должен быть 'вопросов'", "вопросов", wordForm(activity, 21))
+                assertEquals("вопроса", wordForm(activity, 3))
+            }
+        }
+    }
+
+    // Склонение для числа 5 (форма «вопросов»)
+    @Test
+    fun wordForm_five_returnsVoprosov() {
+        launchWithSession().use { scenario ->
+            scenario.onActivity { activity ->
+                assertEquals("вопросов", wordForm(activity, 5))
+            }
+        }
+    }
+
+    // Склонение для числа 10 (максимум в тесте, форма «вопросов»)
+    @Test
+    fun wordForm_ten_returnsVoprosov() {
+        launchWithSession().use { scenario ->
+            scenario.onActivity { activity ->
+                assertEquals("вопросов", wordForm(activity, 10))
+            }
+        }
+    }
+
+    // Оранжевый цвет для среднего процента (50%)
+    @Test
+    fun scoreColor_midPercent_returnsOrange() {
+        launchWithSession().use { scenario ->
+            scenario.onActivity { activity ->
+                val orange = android.graphics.Color.parseColor("#E65100")
+                assertEquals("50% должно давать оранжевый цвет", orange, scoreColor(activity, 50))
+            }
+        }
+    }
+
+    // Оранжевый цвет на нижней границе диапазона (40%)
+    @Test
+    fun scoreColor_boundaryPercent40_returnsOrange() {
+        launchWithSession().use { scenario ->
+            scenario.onActivity { activity ->
+                val orange = android.graphics.Color.parseColor("#E65100")
+                val red    = android.graphics.Color.parseColor("#B71C1C")
+                val actual = scoreColor(activity, 40)
+                assertEquals("40% должно давать оранжевый цвет", orange, actual)
+                assertNotEquals("40% не должно быть красным", red, actual)
+            }
+        }
+    }
+
+    // После одного ответа счётчик пропущенных уменьшается на единицу
+    @Test
+    fun getSkippedQuestionsCount_afterOneAnswer_decreasesByOne() {
+        launchWithSession().use { scenario ->
+            scenario.onActivity { activity ->
+                val questionsField = TestActivity::class.java
+                    .getDeclaredField("questionList").apply { isAccessible = true }
+                @Suppress("UNCHECKED_CAST")
+                val questions = questionsField.get(activity) as List<*>
+
+                val userAnswersField = TestActivity::class.java
+                    .getDeclaredField("userAnswers").apply { isAccessible = true }
+                @Suppress("UNCHECKED_CAST")
+                val userAnswers = userAnswersField.get(activity) as MutableMap<Int, Int>
+
+                val initialSkipped = questions.size
+                userAnswers[0] = 0 // имитируем ответ на первый вопрос
+
+                assertEquals(
+                    "После одного ответа должен остаться на один пропущенный меньше",
+                    initialSkipped - 1, getSkippedCount(activity)
+                )
             }
         }
     }

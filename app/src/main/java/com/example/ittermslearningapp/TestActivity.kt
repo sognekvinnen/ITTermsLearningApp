@@ -371,12 +371,7 @@ class TestActivity : AppCompatActivity() {
             modeName = "теста",
             emoji = "📝"
         ) {
-            startActivity(
-                Intent(this, MainMenuActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-            )
-            finish()
+            showResults()
         }
     }
 
